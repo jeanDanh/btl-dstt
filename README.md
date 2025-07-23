@@ -8,3 +8,5 @@ Frontend:
     cd frontend
     npm install
     npm run dev 
+
+chạy bằng powershell 
