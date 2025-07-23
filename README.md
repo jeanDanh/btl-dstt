@@ -1,12 +1,11 @@
-Note
-Server/Backend: 
+# BTL ĐSTT
+Chạy bằng powershell.
+## Server/Backend: 
     python CustomDataAdding.py
     python ProductDataAdding.py
     python run.py run
 
-Frontend:
+## Frontend:
     cd frontend
     npm install
     npm run dev 
-
-chạy bằng powershell 
