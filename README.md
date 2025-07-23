@@ -1,5 +1,5 @@
 # BTL ĐSTT
-Chạy bằng powershell.
+Chạy bằng powershell. Mở hai process Powershell vừa chạy server vừa chạy frontend.
 ## Server/Backend: 
     python CustomDataAdding.py
     python ProductDataAdding.py
