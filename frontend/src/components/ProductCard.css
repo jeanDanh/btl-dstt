@@ -1,0 +1,74 @@
+html {
+  font-size: clamp(12px, 1.5vw, 18px);
+}
+
+.product-image {
+  height: 200px;
+  width: 100%;
+  object-fit: contain;
+  background-color: #fff;
+  padding: 5px;
+}
+
+.buy-btn {
+  background-color: #F4A261;
+  color: white;
+  font-size: 1rem;
+  font-family: Tahoma, sans-serif;
+  padding: 10px 0;
+  border: none;
+  transition: background-color 0.2s ease;  
+}
+
+.buy-btn:hover {
+  background-color: #e76f51;
+  color: white;
+}
+
+.buy-btn:active {
+  background-color: #e76f51;
+  color: white;
+  font-weight: bold;
+}
+
+.quantity-control {
+  font-size: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+.quantity-btn,
+.quantity-input {
+  width: 0.875rem;
+  height: 0.9rem;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  color: #6c757d;
+  padding: 0;
+  transition: background-color 0.2s ease;
+  border-radius: 50%;
+  text-align: center;
+}
+
+.quantity-btn:hover {
+  background-color: #eaeaea;
+}
+
+.quantity-input {
+  border: none;
+  background-color: transparent;
+}
+
+.truncate {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+}

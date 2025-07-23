@@ -1,0 +1,50 @@
+.head-bar {
+  background: #1b1b1b;
+  padding: 1rem;
+}
+
+.tool-bar {
+    background: #1b1b1b;
+}
+
+.logo {
+  height: auto;    
+  width: 25%;
+  margin-bottom: 1.5rem;
+  object-fit: contain;
+}
+
+.nav {
+  list-style: none;
+  display: flex;
+  gap: 0rem;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: white;
+}
+
+.nav-link:hover {
+  color: orange;
+}
+
+.custom-nav {
+  width: 8rem;
+  color: white;
+  font-family: 'Inter', sans-serif;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.custom-nav:hover {
+  background-color: #ff8800;
+  color: black;
+}
+
+.custom-nav.active {
+  background-color: white;
+  color: black;
+}
