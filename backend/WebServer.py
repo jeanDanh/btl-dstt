@@ -142,6 +142,20 @@ class WebServer:
 
 
     def set_routes(self, app):
+        @app.route("/")
+        def home():
+            try:
+                message = {
+                           '/nguoi-dung':'localhost:5000/nguoi-dung',
+                           '/danh-sach-san-pham-goi-y':'localhost:5000/danh-sach-san-pham-goi-y',
+                           '/danh-sach-san-pham-da-mua':'localhost:5000/danh-sach-san-pham-da-mua',
+                           '/danh-sach-san-pham':'localhost:5000/danh-sach-san-pham',
+                           'Empty API':'See the list above, visit the API you want',
+                           }
+            except Exception:
+                message = jsonify([])
+            return message
+
         @app.route("/danh-sach-san-pham")
         def danh_sach_san_pham():
             try:

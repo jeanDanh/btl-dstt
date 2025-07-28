@@ -1,7 +1,8 @@
-import { BrowserRouter as Router, Routes, Route, NavLink} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, NavLink } from "react-router-dom";
 import AllProduct from "./components/AllProduct";
 import ProductPurchased from "./components/ProductPurchased";
 import ProductPropose from "./components/ProductPropose";
+import Account from './components/Account';
 import "./App.css";
 
 function App() {
@@ -22,6 +23,9 @@ function App() {
           <li className="nav-item">
             <NavLink to="/de-xuat" className="nav-link custom-nav">Đề xuất</NavLink>
           </li>
+          <li className="nav-item">
+            <NavLink to="/tai-khoan" className="nav-link custom-nav">Tài khoản</NavLink>
+          </li>
         </ul>
       </div>
 
@@ -30,6 +34,7 @@ function App() {
           <Route path="/" element={<AllProduct />} />
           <Route path="/da-mua" element={<ProductPurchased />} />
           <Route path="/de-xuat" element={<ProductPropose />} />
+          <Route path="/tai-khoan" element={<Account />} />
         </Routes>
       </div>
     </Router>
