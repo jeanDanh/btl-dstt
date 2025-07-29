@@ -1,5 +1,5 @@
 # BTL ĐSTT
-Chạy bằng powershell. Mở hai process Powershell vừa chạy server vừa chạy frontend.
+Chạy bằng shell gì cũng được. Phải mở hai tiến trình chạy backend + frontend cùng lúc
 ## Server/Backend: 
     python CustomDataAdding.py
     python ProductDataAdding.py
@@ -9,3 +9,5 @@ Chạy bằng powershell. Mở hai process Powershell vừa chạy server vừa 
     cd frontend
     npm install
     npm run dev 
+
+1. API nằm hàm set_routes trong WebServer.py.
