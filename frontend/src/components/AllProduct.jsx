@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import ProductCard from "./ProductCard"
 
 function AllProduct() {
-  const [products, setProducts] = useState([]) 
+  const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
@@ -24,6 +24,13 @@ function AllProduct() {
 
   return (
     <>
+      <div className="input-group search-bar">
+        <div className="form-outline" data-mdb-input-init="">
+          <input type="search" id="form1" className="form-control" placeholder="Tìm sản phẩm" />
+        </div>
+      </div>
+
+
       <div className="container mt-5">
         {loading && <p>Đang tải sản phẩm...</p>}
         {error && <p className="text-danger">Lỗi: {error}</p>}

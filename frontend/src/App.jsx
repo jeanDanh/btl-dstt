@@ -8,11 +8,11 @@ import "./App.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
-import { useAuth } from '../src/providers/Auth';
+import { useProvider } from './providers/Provider';
 
 
 function App() {
-  const { displayName, email, isLoggedIn } = useAuth();
+  const { displayName, email, isLoggedIn } = useProvider();
 
 
   return (
@@ -37,7 +37,6 @@ function App() {
         }
       </div>
 
-
       <div className="container-fluid text-white tool-bar">
         <ul className="nav">
           <li className="nav-item">
@@ -52,6 +51,8 @@ function App() {
         </ul>
         <Account />
       </div>
+
+
 
       <div className="container mt-4">
         <Routes>

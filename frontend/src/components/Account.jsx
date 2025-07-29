@@ -1,9 +1,9 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { useState } from 'react';
-import { useAuth } from '../providers/Auth';
+import { useProvider } from '../providers/Provider';
 function NewAccount() {
-    const { setDisplayName, email, setEmail, setIsLoggedIn, isLoggedIn } = useAuth();
+    const { setDisplayName, email, setEmail, setIsLoggedIn, isLoggedIn } = useProvider();
     const [password, setPassword] = useState("");
 
     const handleLogin = async () => {
