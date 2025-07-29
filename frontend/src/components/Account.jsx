@@ -3,9 +3,11 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { useState } from 'react';
 
 function Account() {
+    const [displayName, setDisplayName] = useState("");
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [loginResult, setLoginResult] = useState(null);
+    const [loginStatus, setLoginResult] = useState(null);
 
     const handleLogin = async () => {
         const response = await fetch("http://localhost:5000/dang-nhap",
@@ -17,6 +19,7 @@ function Account() {
         ).then(response => response.json());
         setLoginResult(response);
         console.log("handleLogin in Account", response)
+        setDisplayName(response.user.name)
     }
 
     const handleLogout = async () => {
@@ -29,6 +32,7 @@ function Account() {
         ).then(response => response.json());
         setLoginResult(response);
         console.log("handleLogout in Account", response)
+        setDisplayName("")
     }
 
     return (
@@ -43,8 +47,9 @@ function Account() {
             </div>
             <button onClick={handleLogin} type="submit" className="btn btn-primary me-3">Đăng nhập</button>
             <button onClick={handleLogout} type="submit" className="btn btn-primary">Đăng xuất</button>
-            <p>check input email: {email}</p>
-            <p>{JSON.stringify(loginResult)}</p>
+            <p>Kiểm tra đầu vào email: {email}</p>
+            <p>Trạng thái đăng nhập: {JSON.stringify(loginStatus)}</p>
+            <p>{displayName}</p>
         </>
     )
 }

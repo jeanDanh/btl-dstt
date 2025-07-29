@@ -1,14 +1,31 @@
+/* * {
+  border: #d623be;
+  border-width: 0.3px;
+  border-style: solid;
+} */
+
+.stick-right{
+  right:0
+}
+
 .head-bar {
   background: #1b1b1b;
   padding: 1rem;
+  position: relative;
+}
+.account-nav{
+  position: absolute;
+  right:20px;
+  top: 50%;
+  transform: translate(0,-50%);
 }
 
 .tool-bar {
-    background: #1b1b1b;
+  background: #1b1b1b;
 }
 
 .logo {
-  height: auto;    
+  height: auto;
   width: 25%;
   margin-bottom: 1.5rem;
   object-fit: contain;
