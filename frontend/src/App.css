@@ -4,8 +4,8 @@
   border-style: solid;
 } */
 
-.stick-right{
-  right:0
+.stick-right {
+  right: 0
 }
 
 .head-bar {
@@ -13,11 +13,16 @@
   padding: 1rem;
   position: relative;
 }
-.account-nav{
+
+.account-nav {
   position: absolute;
-  right:20px;
+  right: 20px;
   top: 50%;
-  transform: translate(0,-50%);
+  transform: translate(0, -50%);
+}
+
+.hover-turn-yellow:hover {
+  background-color: rgb(243, 238, 203);
 }
 
 .tool-bar {

@@ -8,14 +8,33 @@ import "./App.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
+import { useAuth } from '../src/providers/Auth';
+
+
 function App() {
+  const { displayName, email, isLoggedIn } = useAuth();
+
+
   return (
     <Router>
       <div className="container-fluid text-white head-bar">
         <img src="https://mybk.hcmut.edu.vn/my/images/logo.png" alt="Logo" className="logo" />
-        <button type="button" className="btn btn-light account-nav" data-bs-toggle="modal" data-bs-target="#exampleModal">
-          Tài khoản
-        </button>
+        {isLoggedIn === false ?
+          (
+            <button type="button" className="btn btn-light account-nav" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              Tài khoản
+            </button>
+          ) :
+          (
+            <div className="hover-turn-yellow card account-nav" data-bs-toggle="modal" data-bs-target="#exampleModal" style={{ width: "18rem" }}>
+              <div className="card-body">
+                <h5 className="card-title">{displayName}</h5>
+                <p className="card-text">
+                  {email}
+                </p>
+              </div>
+            </div>)
+        }
       </div>
 
 
