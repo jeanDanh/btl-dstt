@@ -1,10 +1,8 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { useState } from 'react';
-
-function Account() {
+function NewAccount() {
     const [displayName, setDisplayName] = useState("");
-
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loginStatus, setLoginResult] = useState(null);
@@ -33,25 +31,52 @@ function Account() {
         setLoginResult(response);
         console.log("handleLogout in Account", response)
         setDisplayName("")
+        setEmail("");
+        setPassword("");
     }
-
     return (
         <>
-            <div className="mb-3">
-                <label htmlFor="exampleFormControlInput1" className="form-label">Email address</label>
-                <input value={email} onChange={(event) => setEmail(event.target.value)} type="email" className="form-control" placeholder="name@example.com"></input>
+            <div
+                className="modal fade"
+                id="exampleModal"
+                tabIndex={-1}
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+            >
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h1 className="modal-title fs-5" id="exampleModalLabel">
+                                Đăng nhập
+                            </h1>
+                            <button
+                                type="button"
+                                className="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                            />
+                        </div>
+                        <div className="modal-body">
+                            <div className="mb-3">
+                                <label htmlFor="exampleFormControlInput1" className="form-label">Email address</label>
+                                <input value={email} onChange={(event) => setEmail(event.target.value)} type="email" className="form-control" placeholder="name@example.com"></input>
+                            </div>
+                            <div className="mb-3">
+                                <label htmlFor="exampleFormControlInput1" className="form-label">Mật khẩu</label>
+                                <input value={password} onChange={(event) => setPassword(event.target.value)} type="password" className="form-control" placeholder="*"></input>
+                            </div>
+                            <button onClick={handleLogin} type="submit" className="btn btn-primary me-3">Đăng nhập</button>
+                            <button onClick={handleLogout} type="submit" className="btn btn-primary">Đăng xuất</button>
+                            <p>Kiểm tra đầu vào email: {email}</p>
+                            <p>Trạng thái đăng nhập: {JSON.stringify(loginStatus)}</p>
+                            <p>{displayName}</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div className="mb-3">
-                <label htmlFor="exampleFormControlInput1" className="form-label">Mật khẩu</label>
-                <input value={password} onChange={(event) => setPassword(event.target.value)} type="password" className="form-control" placeholder="*"></input>
-            </div>
-            <button onClick={handleLogin} type="submit" className="btn btn-primary me-3">Đăng nhập</button>
-            <button onClick={handleLogout} type="submit" className="btn btn-primary">Đăng xuất</button>
-            <p>Kiểm tra đầu vào email: {email}</p>
-            <p>Trạng thái đăng nhập: {JSON.stringify(loginStatus)}</p>
-            <p>{displayName}</p>
+
         </>
     )
 }
-// Ý tưởng về luồng hoạt động: khi tôi nhấn nút Đăng nhập, nút sẽ gọi hàm TestLogin, tất cả những gì điền trong form sẽ được truyền vào
-export default Account;
+
+export default NewAccount;

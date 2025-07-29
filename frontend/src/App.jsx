@@ -3,7 +3,6 @@ import AllProduct from "./components/AllProduct";
 import ProductPurchased from "./components/ProductPurchased";
 import ProductPropose from "./components/ProductPropose";
 import Account from './components/Account';
-import NewAccount from './components/NewAccount';
 import "./App.css";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -31,11 +30,8 @@ function App() {
           <li className="nav-item">
             <NavLink to="/de-xuat" className="nav-link custom-nav">Đề xuất</NavLink>
           </li>
-          {/* <li className="nav-item">
-            <NavLink to="/tai-khoan" className="nav-link custom-nav">Tài khoản (cũ)</NavLink>
-          </li> */}
         </ul>
-        <NewAccount />
+        <Account />
       </div>
 
       <div className="container mt-4">
@@ -43,7 +39,6 @@ function App() {
           <Route path="/" element={<AllProduct />} />
           <Route path="/da-mua" element={<ProductPurchased />} />
           <Route path="/de-xuat" element={<ProductPropose />} />
-          {/* <Route path="/tai-khoan" element={<Account />} /> */}
         </Routes>
       </div>
 
