@@ -1,52 +1,50 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import { useState, useEffect } from 'react';
-
-const TestLogin = () => {
-    const [data, setData] = useState(null);
-    useEffect(() => {
-        const getData = async () => {
-            const response = await fetch("http://localhost:5000/nguoi-dung").then(response => response.json());
-            setData(response);
-            console.log("Fetched data", response);
-        }
-        getData();
-    }, [])
-
-    return (
-        <div>
-            <h2>User info </h2>
-            {
-                !data ? (
-                    <p>Loading...</p>
-                ) : data.status === true ? (
-                    <div>
-                        <p><strong>Name:</strong> {data.user.name}</p>
-                        <p><strong>Email:</strong> {data.user.email}</p>
-                        <p><strong>ID:</strong> {data.user.id}</p>
-                    </div>
-                ) : (
-                    <p style={{ color: "red" }}>{data.message}</p>
-                )
-            }
-        </div>
-    );
-}
+import { useState } from 'react';
 
 function Account() {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [loginResult, setLoginResult] = useState(null);
+
+    const handleLogin = async () => {
+        const response = await fetch("http://localhost:5000/dang-nhap",
+            {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, password })
+            }
+        ).then(response => response.json());
+        setLoginResult(response);
+        console.log("handleLogin in Account", response)
+    }
+
+    const handleLogout = async () => {
+        const response = await fetch("http://localhost:5000/dang-xuat",
+            {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, password })
+            }
+        ).then(response => response.json());
+        setLoginResult(response);
+        console.log("handleLogout in Account", response)
+    }
+
     return (
         <>
             <div className="mb-3">
                 <label htmlFor="exampleFormControlInput1" className="form-label">Email address</label>
-                <input type="email" className="form-control" id="exampleFormControlInput1" placeholder="name@example.com"></input>
+                <input value={email} onChange={(event) => setEmail(event.target.value)} type="email" className="form-control" placeholder="name@example.com"></input>
             </div>
             <div className="mb-3">
                 <label htmlFor="exampleFormControlInput1" className="form-label">Mật khẩu</label>
-                <input type="password" className="form-control" id="exampleFormControlInput1" placeholder="*"></input>
+                <input value={password} onChange={(event) => setPassword(event.target.value)} type="password" className="form-control" placeholder="*"></input>
             </div>
-            <button type="submit" className="btn btn-primary me-3">Đăng nhập</button>
-            <button type="submit" className="btn btn-primary">Đăng xuất</button>
-            <TestLogin />
+            <button onClick={handleLogin} type="submit" className="btn btn-primary me-3">Đăng nhập</button>
+            <button onClick={handleLogout} type="submit" className="btn btn-primary">Đăng xuất</button>
+            <p>check input email: {email}</p>
+            <p>{JSON.stringify(loginResult)}</p>
         </>
     )
 }
