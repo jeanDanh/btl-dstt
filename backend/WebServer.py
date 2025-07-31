@@ -17,11 +17,17 @@ class WebServer:
         
 
     def run(self, host='127.0.0.1', port=5000):
-        app = Flask(__name__)
+        print("STATIC FOLDER:", os.path.abspath("./frontend/dist"))
+        app = Flask(__name__,
+                    static_folder=os.path.abspath("./frontend/dist"),
+                    static_url_path=""
+                )
         CORS(app)
         self.set_routes(app)
         app.secret_key = 'nhom_5'
         app.run(host=host, port=port, debug=True)
+        
+
     
     def console_test(self):
         cmd = 10
@@ -60,7 +66,7 @@ class WebServer:
                             print (prod)
                     case 5:
                         print ("Danh sách vật phẩm đề xuất: ")
-                        for prod in self.getProposeProduct(5):
+                        for prod in self.getProposeProduct():
                             print (prod)
                     case 6: 
                         self.buy(
@@ -122,15 +128,14 @@ class WebServer:
             self.data_mag.getPurchaseData()
         )
     
-    def getProposeProduct(self, k):
+    def getProposeProduct(self):
         if self.acc_mag.id is None:
             raise AccountError('You are not logged in')
         
         return self.acc_mag.getProposeProduct(
             self.data_mag.getCustomData(),
             self.data_mag.getProductData(),
-            self.data_mag.getPurchaseData(),
-            k
+            self.data_mag.getPurchaseData()
         )
 
     def getUserInfo(self):
@@ -145,16 +150,10 @@ class WebServer:
         @app.route("/")
         def home():
             try:
-                message = {
-                           '/nguoi-dung':'localhost:5000/nguoi-dung',
-                           '/danh-sach-san-pham-goi-y':'localhost:5000/danh-sach-san-pham-goi-y',
-                           '/danh-sach-san-pham-da-mua':'localhost:5000/danh-sach-san-pham-da-mua',
-                           '/danh-sach-san-pham':'localhost:5000/danh-sach-san-pham',
-                           'Empty API':'See the list above, visit the API you want',
-                           }
-            except Exception:
-                message = jsonify([])
-            return message
+                return app.send_static_file("index.html")
+            except Exception as err:
+                print (err)
+                return jsonify({"status": "something wrong!"})
 
         @app.route("/danh-sach-san-pham")
         def danh_sach_san_pham():
@@ -168,17 +167,15 @@ class WebServer:
         def danh_sach_san_pham_da_mua():
             try:
                 product = self.getPreviousProduct()
-            except Exception as err:
-                print(err)
+            except Exception:
                 product = jsonify([])
             return product
         
         @app.route("/danh-sach-san-pham-goi-y")
         def danh_sach_san_pham_goi_y():
             try:
-                product = self.getProposeProduct(5)
-            except Exception as err:
-                print(err)
+                product = self.getProposeProduct()
+            except Exception:
                 product = jsonify([])
             return product
         
@@ -193,7 +190,6 @@ class WebServer:
                 user = next((c for c in self.data_mag.getCustomData() if c["id"] == self.acc_mag.id), None)
                 return jsonify({"success": True, "user": user})
             except AccountError as err:
-                print(err)
                 return jsonify({"success": False, "message": str(err)}), 401
             
         @app.route("/dang-xuat", methods=["POST"])
@@ -203,7 +199,6 @@ class WebServer:
                 self.logout()
                 return jsonify({"status": True, "message": "Đăng xuất thành công"})
             except AccountError as err:
-                print(err)
                 return jsonify({"status": False, "message": str(err)})
             
         @app.route("/nguoi-dung", methods=["GET"])
@@ -213,20 +208,4 @@ class WebServer:
                 return jsonify({"status": True, "user": user})
             except AccountError as err:
                 return jsonify({"status": False, "message": str(err)})
-            
-        @app.route("/mua-hang", methods=["POST"])
-        def mua_hang():
-            try:
-                data = request.get_json()
-                self.buy(data['id'], data['quantity'])
-            except Exception as err:
-                print(err)
-
-        @app.route("/huy-hang", methods=["POST"])
-        def huy_hang():
-            try:
-                data = request.get_json()
-                self.drop(data['id'])
-            except Exception as err:
-                print(err)
 

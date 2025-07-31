@@ -21,15 +21,14 @@ class AccountManager:
             ]
 
     
-    def getProposeProduct(self, custom, product, purchase, k):
+    def getProposeProduct(self, custom, product, purchase):
         return [] if self.id is None else [
             prod 
                 for srt_prod_id in ShoppingMatrix(
                     [cus['id'] for cus in custom],
                     [prod['id'] for prod in product],
-                    [(pur['cus_id'], pur['prod_id'], pur['quantity']) for pur in purchase],
-                    k
-                ).getRow(self.id, k)
+                    [(pur['cus_id'], pur['prod_id'], pur['quantity']) for pur in purchase]
+                ).getRow(self.id)
                 for prod in product
                 if prod['id'] == srt_prod_id
             ]

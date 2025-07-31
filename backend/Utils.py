@@ -1,5 +1,4 @@
 import numpy as np
-from typing import List, Tuple
 
 class SVD:
     @staticmethod
@@ -13,21 +12,35 @@ class SVD:
         return np.dot(U, np.dot(S_matrix, Vt))
     
     @staticmethod
-    def svd_reduce(U, S, Vt, k):
+    def svd_reduce(U, S, Vt, energy_ratio=0.95):
+        total_energy = np.sum(S**2)
+        if total_energy == 0:
+            return U, S, Vt
+
+        energy = 0
+        k = 0
+        for i in range(len(S)):
+            energy += S[i]**2
+            if energy / total_energy >= energy_ratio:
+                k = i + 1
+                break
+
         U_k = U[:, :k]
         S_k = S[:k]
         Vt_k = Vt[:k, :]
         return U_k, S_k, Vt_k
+
     
     @staticmethod
-    def calc(matrix, k):
+    def calc(matrix):
         U, S, Vt = SVD.svd_decompose(matrix)
-        U_k, S_k, Vt_k = SVD.svd_reduce(U, S, Vt, k)
+        U_k, S_k, Vt_k = SVD.svd_reduce(U, S, Vt)
         return SVD.svd_reconstruct(U_k, S_k, Vt_k)
-    
+
 class ShoppingMatrix:
-    def __init__ (self, cus_id: List[str], prod_id: List[str], purchase: List[Tuple[str, str, float]], k :int):
-        self.k = k
+    def __init__ (self, cus_id, prod_id, purchase):
+        self.threshold = 0
+        self.num = 10
         self.cus_map = {cus: idx for idx, cus in enumerate(cus_id)}
         self.prod_map = {prod: idx for idx, prod in enumerate(prod_id)}
         self.prods = prod_id
@@ -38,21 +51,16 @@ class ShoppingMatrix:
             if cus in self.cus_map and prod in self.prod_map:
                 self.matrix[self.cus_map[cus]][self.prod_map[prod]] += value
 
-    def getRow(self, id, num):
-        n_matrix = SVD.calc(self.matrix, self.k)
+    def getRow(self, id):
+        n_matrix = SVD.calc(self.matrix)
+
         products = n_matrix[self.cus_map[id]]
 
-        prodrec = []
-        for idx, score in enumerate(products):
-            if self.matrix[self.cus_map[id]][idx] == 0:
-                prodrec.append((score, idx))
+        prodrec = [(score, idx) 
+                    for idx, score in enumerate(products) 
+                    if self.matrix[self.cus_map[id]][idx] == 0 and score > self.threshold
+                    ]
 
-        sorted_prod = sorted(prodrec, key=lambda x: x[0], reverse=True)
-
-        res = []
-        for i in range (min(num, len(sorted_prod))):
-            score, idx = sorted_prod[i]
-            res.append(self.prods[idx])
-            
-
-        return res
+        return [self.prods[idx] 
+                for score, idx in sorted(prodrec, key=lambda x: x[0], reverse=True)[:self.num]
+                ]
